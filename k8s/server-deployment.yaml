@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  server-deployment
+  labels:
+    name: server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-deployment
+  template:
+    metadata:
+      labels:
+        app:  server-deployment
+    spec:
+      containers:
+      - image:  server-k8s-image
+        name:  server-k8s-image
+        imagePullPolicy: Never
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "550M"
+          limits:
+            cpu: "400m"
+            memory: "650M"
+        env:
+        - name:  PORT
+          value: "4000"      
+        - name: MONGO_URI
+          value: mongodb://mongodb/test
+        ports:
+        - containerPort:  4000
+          
+      
